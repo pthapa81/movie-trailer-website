@@ -8,7 +8,7 @@ main_page_head = '''
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Fresh Tomatoes!</title>
+    <title>Rotten Cucumbers</title>
 
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -35,8 +35,8 @@ main_page_head = '''
             height: 100%;
         }
         .movie-tile {
-            margin-bottom: 20px;
-            padding-top: 20px;
+            margin-bottom: 10px;
+            padding-top: 10px;
         }
         .movie-tile:hover {
             background-color: #EEE;
@@ -61,6 +61,7 @@ main_page_head = '''
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var movieSynopsis = $(this).attr('data-movie-synopsis')
             var movieTitle = $(this).text()
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId;
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -73,6 +74,7 @@ main_page_head = '''
             }));
              
             $("#movieTitle").empty().append(movieTitle);
+            $("#movie-synopsis").empty().append("</br> <strong> Synopsis: </strong> " + movieSynopsis);
 
             $("#trailer").on('hidden.bs.modal', function () {
                 var src = $(this).find('iframe').attr('src');
@@ -109,6 +111,8 @@ main_page_content = '''
 <div class="modal-body">
      <div id="trailer-video-container">
     </div>
+    <div id="movie-synopsis">
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -122,7 +126,7 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+            <a class="navbar-brand" href="#">Rotten Cucumbers Movie Trailers</a>
           </div>
         </div>
       </div>
@@ -136,8 +140,12 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="200" height="250">
+<div class="col-sm-4 movie-tile text-center" 
+     data-trailer-youtube-id="{trailer_youtube_id}" 
+     data-movie-synopsis="{movie_synopsis}"
+     data-toggle="modal" 
+     data-target="#trailer">
+    <img src="{poster_image_url}" width="150" height="250">
     <h4>{movie_title}</h4>
 </div>
 '''
@@ -167,9 +175,11 @@ def create_movie_tiles_content(movie):
                           else None)
     # Append the tile for the movie with its content filled in
     content += movie_tile_content.format(
-        movie_title=movie.title,
-        poster_image_url=movie.poster_image_url,
-        trailer_youtube_id=trailer_youtube_id
+        movie_title=movie.title.encode('utf-8'),
+        poster_image_url=movie.poster_image_url.encode('utf-8'),
+        trailer_youtube_id=trailer_youtube_id.encode('utf-8'),
+        movie_synopsis=movie.synopsis.encode('utf-8'),
+        movie_release_year=movie.release_year.encode('utf-8')
     )
     return content
 
