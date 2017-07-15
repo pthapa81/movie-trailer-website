@@ -1,14 +1,14 @@
 import requests
 
 
-def getFavoriteMovies(URL = 'https://api.themoviedb.org/3/discover/movie?api_key=63deb316427624bb95cf1d828e19b7a2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'):
+def getFavoriteMovies(URL = 'https://api.themoviedb.org/3/discover/movie?api_key=63deb316427624bb95cf1d828e19b7a2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'): # noqa
 	# Call the api from the provided url
 	response = requests.get(URL)
 	return response.json()['results']
 
 def getDefaultFavoritesURL():
 	# Construct the favorite movie API URL
-	return getBaseApiURL() + '/movie?api_key=' + getApiKey() + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
+	return getBaseApiURL() + '/movie?api_key=' + getApiKey() + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1' # noqa
 
 def getBaseApiURL():
 	# Get the base API url for themoviedb
