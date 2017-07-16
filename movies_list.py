@@ -2,11 +2,11 @@ from movie_services import movies
 import media
 import json
 import fresh_tomatoes
-    """
-    List of methods and helper methods.
-    These methods use movies service defined in move_services directory
-    Used to construct favorite movie object list and full Urls for videos and poster
-    """
+"""
+List of methods and helper methods.
+These methods use movies service defined in move_services directory
+Used to construct favorite movie object list and full Urls for videos and poster
+"""
 def generate_favorite_movies():
   # Calls method from movies service to generate list of favorite movies
   favMovies = movies.getFavoriteMovies()
